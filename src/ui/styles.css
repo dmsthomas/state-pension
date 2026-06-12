@@ -1,0 +1,313 @@
+:root {
+  --ink: #1a2333;
+  --ink-soft: #4a5568;
+  --ink-faint: #8a94a6;
+  --paper: #fafbfc;
+  --card: #ffffff;
+  --line: #e3e8ef;
+  --in: #0e7c66;
+  --in-soft: rgba(14, 124, 102, 0.12);
+  --out: #c0392b;
+  --out-soft: rgba(192, 57, 43, 0.12);
+  --fund: #1f4e8c;
+  --accent: #1f4e8c;
+  --warn: #b7791f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+header.hero {
+  max-width: 760px;
+  margin-bottom: 1.5rem;
+}
+
+header.hero h1 {
+  font-size: 1.9rem;
+  line-height: 1.2;
+  margin: 0 0 0.6rem;
+  letter-spacing: -0.02em;
+}
+
+header.hero p {
+  color: var(--ink-soft);
+  margin: 0.4rem 0;
+  font-size: 1.02rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .levers {
+    position: static !important;
+  }
+}
+
+.main-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+/* ---- stat cards ---- */
+.stat-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.9rem;
+}
+
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+}
+
+.stat-card .label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+  margin-bottom: 0.25rem;
+}
+
+.stat-card .value {
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.stat-card .value.ok {
+  color: var(--in);
+}
+.stat-card .value.bad {
+  color: var(--out);
+}
+
+.stat-card .sub {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  margin-top: 0.3rem;
+}
+
+.framing-note {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  background: var(--card);
+  border-left: 3px solid var(--warn);
+  border-radius: 0 8px 8px 0;
+  padding: 0.6rem 0.9rem;
+}
+
+/* ---- charts ---- */
+.chart-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1rem 1.1rem 0.6rem;
+}
+
+.chart-card h2 {
+  font-size: 1.02rem;
+  margin: 0 0 0.1rem;
+}
+
+.chart-card .chart-sub {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin: 0 0 0.5rem;
+}
+
+.chart-card svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  padding: 0.35rem 0 0.5rem;
+}
+
+.legend .key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.legend .swatch {
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+/* ---- levers ---- */
+.levers {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1.1rem 1.15rem;
+  position: sticky;
+  top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.05rem;
+}
+
+.levers h2 {
+  font-size: 0.95rem;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+.lever label.lever-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.86rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.lever label.lever-label .val {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.lever input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+  margin: 0;
+}
+
+.lever .hint {
+  font-size: 0.74rem;
+  color: var(--ink-faint);
+  margin-top: 0.15rem;
+}
+
+.seg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.seg button {
+  flex: 1 1 auto;
+  font: inherit;
+  font-size: 0.78rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-soft);
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.seg button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+details.advanced summary {
+  cursor: pointer;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+details.advanced .lever {
+  margin-top: 0.8rem;
+}
+
+.reset-btn {
+  font: inherit;
+  font-size: 0.8rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.reset-btn:hover {
+  border-color: var(--ink-faint);
+}
+
+/* ---- methodology ---- */
+.methodology {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.methodology summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.methodology h3 {
+  color: var(--ink);
+  font-size: 0.92rem;
+  margin: 1.1rem 0 0.3rem;
+}
+
+.methodology ul {
+  padding-left: 1.2rem;
+  margin: 0.3rem 0;
+}
+
+.methodology li {
+  margin: 0.25rem 0;
+}
+
+.methodology a {
+  color: var(--accent);
+}
+
+footer {
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+}
