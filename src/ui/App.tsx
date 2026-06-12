@@ -6,6 +6,7 @@ import { requiredNiDelta, requiredPensionLevel, requiredSpa } from "../model/sol
 import type { ModelParams, PopulationData, UpratingRule } from "../model/types";
 import { LeverPanel, type SpaChoice } from "./LeverPanel";
 import { StatCards } from "./StatCards";
+import { FiguresTable } from "./FiguresTable";
 import { InOutChart } from "./charts/InOutChart";
 import { FundBalanceChart } from "./charts/FundBalanceChart";
 import { GdpChart } from "./charts/GdpChart";
@@ -62,6 +63,7 @@ export function App() {
   const initial = useMemo(paramsFromQuery, []);
   const [params, setParams] = useState<ModelParams>(initial.params);
   const [spaChoice, setSpaChoice] = useState<SpaChoice>(initial.spa);
+  const [horizon, setHorizon] = useState<number>(2050);
 
   const result = useMemo(() => runModel(params, pop), [params]);
   const solved = useMemo(
@@ -96,8 +98,12 @@ export function App() {
         <h1>The State Pension as a Pension Scheme</h1>
         <p>
           National Insurance contributions pay in; state pensions pay out. The National Insurance Fund really exists —
-          this is it, on its own terms, with no help from general taxation. Does the scheme balance? And what would it
-          take to make it?
+          this is it, on its own terms, with no help from general taxation.
+        </p>
+        <p>
+          Right now the scheme more than pays for itself: the April 2025 employer NI rise put it roughly £14bn a year
+          in surplus, and the fund is growing. The question is what happens as the triple lock compounds and the
+          1960s-born cohort retires — and what it would take to keep the scheme in balance.
         </p>
       </header>
 
@@ -106,12 +112,21 @@ export function App() {
           <StatCards result={result} solved={solved} currentLevel={params.pensionLevelPct} />
 
           <div className="chart-card">
-            <h2>Money in vs money out</h2>
+            <div className="chart-head">
+              <h2>Money in vs money out</h2>
+              <div className="seg" role="group" aria-label="Chart horizon">
+                {[2035, 2050, 2075].map((h) => (
+                  <button key={h} className={horizon === h ? "active" : ""} onClick={() => setHorizon(h)}>
+                    to {h}
+                  </button>
+                ))}
+              </div>
+            </div>
             <p className="chart-sub">
               NI contributions (plus interest on the fund) vs pension and benefit payments, £bn per year, nominal —
               uprating: {upratingLabel[params.uprating.kind]}
             </p>
-            <InOutChart rows={result.rows} />
+            <InOutChart rows={result.rows.filter((r) => r.year <= horizon)} />
             <div className="legend">
               <span className="key">
                 <span className="swatch" style={{ background: "var(--in)" }} /> money in
@@ -127,6 +142,8 @@ export function App() {
               </span>
             </div>
           </div>
+
+          <FiguresTable result={result} />
 
           <div className="chart-card">
             <h2>The fund</h2>

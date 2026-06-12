@@ -20,9 +20,20 @@ export function StatCards({ result, solved, currentLevel }: { result: ModelResul
       fixes.push(`pension age ${solved.spa.toFixed(1).replace(".0", "")} by 2045`);
   }
 
+  const now = result.rows.find((r) => r.year === 2026)!;
+
   return (
     <>
       <div className="stat-cards">
+        <div className="stat-card">
+          <div className="label">This year, 2026-27</div>
+          <div className={`value ${now.surplus < 0 ? "bad" : "ok"}`}>
+            {now.surplus < 0 ? "−" : "+"}£{Math.abs(now.surplus).toFixed(0)}bn
+          </div>
+          <div className="sub">
+            £{now.receipts.toFixed(0)}bn in, £{now.spending.toFixed(0)}bn out
+          </div>
+        </div>
         <div className="stat-card">
           <div className="label">Fund runs dry</div>
           <div className={`value ${exhaustionYear ? "bad" : "ok"}`}>{exhaustionYear ? fy(exhaustionYear) : "Never (to 2075)"}</div>
